@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 @Entity
 public class ChestMuscle extends MuscleGroup {
-
     private boolean targetsUpperChest;
     private boolean targetsLowerChest;
 }
