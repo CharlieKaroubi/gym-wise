@@ -24,6 +24,11 @@ public class ExerciseController {
         return ResponseEntity.ok(exerciseService.getAllExercises());
     }
 
+    @GetMapping("/group/{name}")
+    public Exercise getByName(@PathVariable String name) {
+        return exerciseService.getByName(name);
+    }
+
     @GetMapping("/group/{muscleGroup}")
     public List<Exercise> getByMuscleGroup(@PathVariable String muscleGroup) {
         return exerciseService.getByMuscleGroup(muscleGroup);
@@ -38,6 +43,12 @@ public class ExerciseController {
     public ResponseEntity<Exercise> addExercise(@RequestBody Exercise exercise) {
         Exercise created = exerciseService.addExercise(exercise);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteExercise(@RequestParam String name) {
+        exerciseService.removeExerciseByName(name);
+        return ResponseEntity.noContent().build();
     }
 
 }

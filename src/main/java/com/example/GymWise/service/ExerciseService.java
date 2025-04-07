@@ -3,6 +3,7 @@ import com.example.GymWise.entity.Exercise;
 import com.example.GymWise.repository.ExerciseRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,19 +17,28 @@ public class ExerciseService {
     }
 
     public Exercise addExercise(Exercise exercise) {
-        System.out.println("Incoming exercise: " + exercise);
-        return exerciseRepository.save(exercise);
+        return this.exerciseRepository.save(exercise);
     }
 
-    public List<Exercise> getByMuscleGroup(String muscleGroup) {
-        return exerciseRepository.findByMuscleGroup(muscleGroup);
-    }
-
-    public List<Exercise> getBySubMuscleGroup(String subMuscleGroup) {
-        return exerciseRepository.findBySubMuscleGroup(subMuscleGroup);
+    @Transactional
+    public void removeExerciseByName(String name) {
+        this.exerciseRepository.deleteByName(name);
     }
 
     public List<Exercise> getAllExercises() {
-        return exerciseRepository.findAll();
+        return this.exerciseRepository.findAll();
     }
+
+    public Exercise getByName(String name) {
+        return this.exerciseRepository.findByName(name);
+    }
+
+    public List<Exercise> getByMuscleGroup(String muscleGroup) {
+        return this.exerciseRepository.findByMuscleGroup(muscleGroup);
+    }
+
+    public List<Exercise> getBySubMuscleGroup(String subMuscleGroup) {
+        return this.exerciseRepository.findBySubMuscleGroup(subMuscleGroup);
+    }
+
 }

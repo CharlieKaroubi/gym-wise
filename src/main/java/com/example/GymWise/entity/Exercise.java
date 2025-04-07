@@ -10,13 +10,13 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
+@Table(name = "gymwise-exercises")
 public class Exercise {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @JsonProperty("name")
     private String name;
 
@@ -37,12 +37,7 @@ public class Exercise {
     private BigDecimal effectiveness;
 
     @JsonProperty("videoUrl")
-    @Lob
     private String videoUrl;
-
-    @JsonProperty("articleUrl")
-    @Lob
-    private String articleUrl;
 
     @Override
     public String toString() {
