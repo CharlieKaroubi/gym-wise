@@ -3,7 +3,7 @@ package com.example.GymWise.service;
 import com.example.GymWise.dto.LoginUserDto;
 import com.example.GymWise.dto.RegisterUserDto;
 import com.example.GymWise.dto.VerifyUserDto;
-import com.example.GymWise.model.User;
+import com.example.GymWise.entity.User;
 import com.example.GymWise.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import org.springframework.security.authentication.AuthenticationManager;

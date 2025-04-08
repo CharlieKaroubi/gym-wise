@@ -1,7 +1,7 @@
 package com.example.GymWise.repository;
 
 
-import com.example.GymWise.model.User;
+import com.example.GymWise.entity.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

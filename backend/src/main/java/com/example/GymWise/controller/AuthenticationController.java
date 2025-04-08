@@ -3,7 +3,7 @@ package com.example.GymWise.controller;
 import com.example.GymWise.dto.LoginUserDto;
 import com.example.GymWise.dto.RegisterUserDto;
 import com.example.GymWise.dto.VerifyUserDto;
-import com.example.GymWise.model.User;
+import com.example.GymWise.entity.User;
 import com.example.GymWise.responses.LoginResponse;
 import com.example.GymWise.service.AuthenticationService;
 import com.example.GymWise.service.JwtService;
