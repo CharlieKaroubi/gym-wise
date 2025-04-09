@@ -40,7 +40,6 @@ import {
                     Rate and review exercises<br />
                     Community Driven<br />
                     Create and share workout plans<br />
-                    
                   </CardContent>
                 </Card>
               </CarouselItem>
