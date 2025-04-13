@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,6 +39,14 @@ public class User implements UserDetails {
     private String verificationExpiration;
 
     private LocalDateTime verificationCodeExpiresAt;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_saved_splits",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "split_id")
+    )
+    private List<Split> savedSplits = new ArrayList<>();
 
     public User(String username, String email, String password) {
         this.username = username;

@@ -20,12 +20,10 @@ public class Exercise {
     @JsonProperty("name")
     private String name;
 
-    @Column(nullable = false)
-    @JsonProperty("muscleGroup")
+    @Column(name = "muscle_group", nullable = false)
     private String muscleGroup;
 
-    @Column(nullable = false)
-    @JsonProperty("subMuscleGroup")
+    @Column(name = "sub_muscle_group", nullable = false)
     private String subMuscleGroup;
 
     @JsonProperty("difficulty")
@@ -36,8 +34,19 @@ public class Exercise {
     @Column(precision = 3, scale = 2)
     private BigDecimal effectiveness;
 
-    @JsonProperty("videoUrl")
+    @Column(name = "video_url")
     private String videoUrl;
+
+    public Exercise(String name, String muscleGroup, String subMuscleGroup, BigDecimal difficulty, BigDecimal effectiveness, String videoUrl) {
+        this.name = name;
+        this.muscleGroup = muscleGroup;
+        this.subMuscleGroup = subMuscleGroup;
+        this.difficulty = difficulty;
+        this.effectiveness = effectiveness;
+        this.videoUrl = videoUrl;
+    }
+
+    public Exercise() {}
 
     @Override
     public String toString() {
