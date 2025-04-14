@@ -6,18 +6,12 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
 public interface SplitRepository extends JpaRepository<Split, Long> {
 
-    @Query(value = """
-        SELECT *
-        FROM splits
-        ORDER BY embedding <=> CAST(:embedding AS vector)
-        LIMIT 3
-    """, nativeQuery = true)
-    List<Split> findTop3MostSimilar(@Param("embedding") String embedding);
 
 }

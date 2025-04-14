@@ -2,6 +2,8 @@ package com.example.GymWise.entity;
 
 import com.example.GymWise.converter.ExerciseMapListConverter;
 import com.example.GymWise.entity.day_exercise.DayExercise;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,10 +24,12 @@ public class Day {
     private String title;
 
     @OneToMany(mappedBy = "day", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<DayExercise> exercises = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "split_id")
+    @JsonBackReference
     private Split split;
 
     public Day(String title, List<DayExercise> exercises) {

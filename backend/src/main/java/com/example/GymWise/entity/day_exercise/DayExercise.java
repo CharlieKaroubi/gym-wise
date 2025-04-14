@@ -2,6 +2,7 @@ package com.example.GymWise.entity.day_exercise;
 
 import com.example.GymWise.entity.Day;
 import com.example.GymWise.entity.Exercise;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class DayExercise {
 
     @ManyToOne
     @MapsId("dayId")
+    @JsonBackReference
     private Day day;
 
     @ManyToOne

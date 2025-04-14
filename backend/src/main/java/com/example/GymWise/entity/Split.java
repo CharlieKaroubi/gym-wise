@@ -1,10 +1,12 @@
 package com.example.GymWise.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
+import com.pgvector.PGvector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,24 +26,20 @@ public class Split {
 
     private String concentration;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "split", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Day> days = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @JdbcTypeCode(SqlTypes.OTHER)
-    @Column(columnDefinition = "vector(1536)")
-    private List<Double> embedding;
-
-    public Split(String name, String description, String concentration, List<Day> days, User creator, List<Double> embedding) {
+    public Split(String name, String description, String concentration, List<Day> days, User creator) {
         this.name = name;
         this.description = description;
         this.concentration = concentration;
         this.days = days;
         this.creator = creator;
-        this.embedding = embedding;
     }
 
     public Split() {}

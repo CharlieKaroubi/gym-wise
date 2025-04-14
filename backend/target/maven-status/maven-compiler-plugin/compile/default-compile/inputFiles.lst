@@ -7,9 +7,10 @@
 /Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/controller/ExerciseController.java
 /Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/controller/SplitController.java
 /Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/controller/UserController.java
-/Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/converter/EmbeddingConverter.java
 /Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/converter/ExerciseMapListConverter.java
 /Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/dto/CreateSplitDto.java
+/Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/dto/DayDto.java
+/Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/dto/DayExerciseDto.java
 /Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/dto/LoginUserDto.java
 /Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/dto/RegisterUserDto.java
 /Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/dto/UserProfileDto.java
@@ -18,6 +19,9 @@
 /Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/entity/Exercise.java
 /Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/entity/Split.java
 /Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/entity/User.java
+/Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/entity/day_exercise/DayExercise.java
+/Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/entity/day_exercise/DayExerciseId.java
+/Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/repository/DayRepository.java
 /Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/repository/ExerciseRepository.java
 /Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/repository/SplitRepository.java
 /Users/gov/Downloads/gym-wise/backend/src/main/java/com/example/GymWise/repository/UserRepository.java
