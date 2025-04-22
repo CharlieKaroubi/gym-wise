@@ -90,11 +90,12 @@ public class SplitService {
         split.setDays(dayEntities);
         Split savedSplit = splitRepository.save(split);
 
-        String input = split.getName() + " " + split.getDescription();
+        String input = "Concentration: "+split.getConcentration() + ". Description: " + split.getDescription();
         Document doc = new Document(
                 input,
                 Map.of(
-                        "splitId", savedSplit.getId()
+                        "splitId", savedSplit.getId(),
+                        "concentration", split.getConcentration()
                 )
         );
         vectorStore.add(List.of(doc));
@@ -110,5 +111,27 @@ public class SplitService {
         );
     }
 
+    public List<Split> getTop3SimilarSplits(String concentration, String input) {
+        SearchRequest request = SearchRequest.builder()
+                .query(input)
+                .topK(3)
+                .filterExpression("concentration == '" + concentration + "'")
+                .build();
+
+        List<Document> splitDocs = vectorStore.similaritySearch(request);
+        List<Split> splits = new ArrayList<>();
+        for (Document doc : splitDocs) {
+            Map<String, Object> metadata = doc.getMetadata();
+            if (metadata != null && metadata.containsKey("splitId")) {
+                Long id = Long.valueOf(metadata.get("splitId").toString());
+                splitRepository.findById(id).ifPresent(splits::add);
+            }
+        }
+        return splits;
+    }
+
+    public List<Split> getAllSplits() {
+        return splitRepository.findAll();
+    }
 
 }

@@ -12,6 +12,4 @@ import java.util.List;
 
 @Repository
 public interface SplitRepository extends JpaRepository<Split, Long> {
-
-
 }

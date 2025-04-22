@@ -30,7 +30,7 @@ public class DayExercise {
 
     public DayExercise() {}
 
-    public DayExercise(Day day, Exercise exercise, String setsReps) {
+    public DayExercise(Day day, Exercise exercise, String setsReps, String intensity) {
         this.day = day;
         this.exercise = exercise;
         this.setsReps = setsReps;

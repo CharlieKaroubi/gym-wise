@@ -29,15 +29,6 @@ public class ExerciseController {
         return exerciseService.getByName(name);
     }
 
-    @GetMapping("/group/{muscleGroup}")
-    public List<Exercise> getByMuscleGroup(@PathVariable String muscleGroup) {
-        return exerciseService.getByMuscleGroup(muscleGroup);
-    }
-
-    @GetMapping("/subgroup/{subMuscleGroup}")
-    public List<Exercise> getBySubMuscleGroup(@PathVariable String subMuscleGroup) {
-        return exerciseService.getBySubMuscleGroup(subMuscleGroup);
-    }
 
     @PostMapping
     public ResponseEntity<Exercise> addExercise(@RequestBody Exercise exercise) {

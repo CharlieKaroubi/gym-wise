@@ -33,12 +33,5 @@ public class ExerciseService {
         return this.exerciseRepository.findByName(name);
     }
 
-    public List<Exercise> getByMuscleGroup(String muscleGroup) {
-        return this.exerciseRepository.findByMuscleGroup(muscleGroup);
-    }
-
-    public List<Exercise> getBySubMuscleGroup(String subMuscleGroup) {
-        return this.exerciseRepository.findBySubMuscleGroup(subMuscleGroup);
-    }
 
 }

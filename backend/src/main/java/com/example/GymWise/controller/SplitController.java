@@ -1,5 +1,6 @@
 package com.example.GymWise.controller;
 import com.example.GymWise.dto.CreateSplitDto;
+import com.example.GymWise.dto.QuerySplitDto;
 import com.example.GymWise.entity.Exercise;
 import com.example.GymWise.entity.Split;
 import com.example.GymWise.repository.SplitRepository;
@@ -21,12 +22,10 @@ import java.util.List;
 public class SplitController {
 
     private final SplitService splitService;
-    private final SplitRepository splitRepository;
 
     @Autowired
-    public SplitController(SplitService splitService, SplitRepository splitRepository) {
+    public SplitController(SplitService splitService) {
         this.splitService = splitService;
-        this.splitRepository = splitRepository;
     }
 
     @PostMapping
@@ -53,7 +52,16 @@ public class SplitController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/similar")
+    public ResponseEntity<List<Split>> getTop3SimilarSplits(@RequestBody QuerySplitDto querySplitDto) {
+        String concentration = querySplitDto.getConcentration();
+        String input = querySplitDto.getInput();
+        return ResponseEntity.ok(splitService.getTop3SimilarSplits(concentration, input));
+    }
 
-
+    @GetMapping
+    public ResponseEntity<List<Split>> getAllSplits() {
+        return ResponseEntity.ok(splitService.getAllSplits());
+    }
 
 }

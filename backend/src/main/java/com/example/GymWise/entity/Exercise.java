@@ -1,11 +1,16 @@
 package com.example.GymWise.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.hypersistence.utils.hibernate.type.array.StringArrayType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,46 +22,39 @@ public class Exercise {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    @JsonProperty("name")
     private String name;
 
-    @Column(name = "muscle_group", nullable = false)
-    private String muscleGroup;
+    private String force;
 
-    @Column(name = "sub_muscle_group", nullable = false)
-    private String subMuscleGroup;
+    private String level;
 
-    @JsonProperty("difficulty")
-    @Column(precision = 3, scale = 2)
-    private BigDecimal difficulty;
+    private String mechanic;
 
-    @JsonProperty("effectiveness")
-    @Column(precision = 3, scale = 2)
-    private BigDecimal effectiveness;
+    private String equipment;
 
-    @Column(name = "video_url")
-    private String videoUrl;
+    private String instructions;
 
-    public Exercise(String name, String muscleGroup, String subMuscleGroup, BigDecimal difficulty, BigDecimal effectiveness, String videoUrl) {
+    private String primaryMuscles;
+
+    private String secondaryMuscles;
+
+    public Exercise(String name,
+                    String force,
+                    String level,
+                    String secondaryMuscles,
+                    String primaryMuscles,
+                    String instructions,
+                    String mechanic,
+                    String equipment) {
         this.name = name;
-        this.muscleGroup = muscleGroup;
-        this.subMuscleGroup = subMuscleGroup;
-        this.difficulty = difficulty;
-        this.effectiveness = effectiveness;
-        this.videoUrl = videoUrl;
+        this.force = force;
+        this.level = level;
+        this.secondaryMuscles = secondaryMuscles;
+        this.primaryMuscles = primaryMuscles;
+        this.instructions = instructions;
+        this.mechanic = mechanic;
+        this.equipment = equipment;
     }
 
     public Exercise() {}
-
-    @Override
-    public String toString() {
-        return "Exercise{" +
-                "name='" + name + '\'' +
-                ", muscleGroup='" + muscleGroup + '\'' +
-                ", subMuscleGroup='" + subMuscleGroup + '\'' +
-                ", difficulty=" + difficulty +
-                ", effectiveness=" + effectiveness +
-                '}';
-    }
-
 }
