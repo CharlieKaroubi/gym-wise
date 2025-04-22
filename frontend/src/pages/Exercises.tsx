@@ -28,10 +28,10 @@ export default function ExercisesDashboard() {
   const [error, setError] = useState<string>('');
   const [search, setSearch] = useState<string>('');
 
-  useEffect(() => {
+  const fetchExercises = async () => {
     try {
       const cached = localStorage.getItem("cachedExercises");
-  
+      
       if (cached) {
         const parsed = JSON.parse(cached);
         if (Array.isArray(parsed)) {
@@ -39,28 +39,27 @@ export default function ExercisesDashboard() {
           return;
         }
       }
+      // If no valid cache, fetch from API
+      const response = await axiosInstance.get<Exercise[]>('/exercises');
+      
+      if (Array.isArray(response.data)) {
+        setExercises(response.data);
+        localStorage.setItem("cachedExercises", JSON.stringify(response.data));
+      } else {
+        setError("Invalid response format");
+      }
     } catch (err) {
-      console.error("Failed to load from localStorage", err);
-      localStorage.removeItem("cachedExercises"); 
+      console.error("Error fetching exercises:", err);
+      if (err instanceof Error && err.name === 'SyntaxError') {
+        localStorage.removeItem("cachedExercises");
+      }
+      setError((err as any).response?.data?.message || 'Failed to load exercises');
     }
-  
-    axiosInstance.get<Exercise[]>('/exercises')
-      .then(res => {
-        if (Array.isArray(res.data)) {
-          setExercises(res.data);
-          localStorage.setItem("cachedExercises", JSON.stringify(res.data));
-        } else {
-          setError("Invalid response format");
-        }
-      })
-      .catch(err => {
-        setError(err.response?.data?.message || 'Failed to load exercises');
-      });
-  }, []);
+  };
 
   useEffect(() => {
-
-  }, [exercises]);
+    fetchExercises();
+  }, []);
 
   const filtered = exercises.filter(ex => {
     const matchSearch = ex.name.toLowerCase().includes(search.toLowerCase());

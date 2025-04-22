@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { useOutletContext } from "react-router-dom";
 import { Navbar } from '@/components/Navbar';
-import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import SplitSkeletonCard from "@/components/SkeletonSplits";
 
 export type Exercise = {
   exerciseName: string;
@@ -36,6 +37,19 @@ export default function SplitsDashboard() {
   const [queryConcentration, setQueryConcentration] = useState("Hypertrophy");
   const [queryInput, setQueryInput] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleAddSplit = async (name: string) => {
+    try {
+      const res = await axiosInstance.post("/users/save-split", null, {
+        params: {
+          splitName: name
+        }
+      });
+      console.log("Split added:", res.data);
+    } catch (err) {
+      console.error("Failed to add split", err);
+    }
+  };
 
   const handleSplitSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -91,6 +105,7 @@ export default function SplitsDashboard() {
                 <option>Strength</option>
                 <option>Powerlifting</option>
                 <option>High Frequency</option>
+                <option>No Preference</option>
             </select>
             </div>
 
@@ -127,14 +142,27 @@ export default function SplitsDashboard() {
             </div>
       </form>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-        {splits.map((split, i) => (
+      {loading
+    ? Array.from({ length: 4 }).map((_, i) => <SplitSkeletonCard key={i} />)
+    : splits.map((split, i) => (
           <Card key={i} className="shadow-md">
             <CardHeader>
               <CardTitle className="flex flex-row items-center justify-between">
                 <span>{split.name}</span>
                 <span className="text-sm text-gray-500">Created By: {split.creator}</span>
                 </CardTitle>
-              <p className="text-sm text-gray-500 mt-1">{split.concentration}</p>
+                <div className = "flex flex-row justify-between">
+                  <p className="text-sm text-gray-500 mt-1">{split.concentration}</p>
+                  <Button
+                      variant="outline"
+                      className="hover:bg-orange-600 cursor-pointer text-white hover:text-white bg-orange-500 w-20"
+                      onClick={() => {
+                        handleAddSplit(split.name);
+                      }}
+                    >
+                      Add Split
+                    </Button>
+                </div>
             </CardHeader>
             <CardContent>
               <p className="text-gray-700 mb-4">{split.description}</p>

@@ -69,7 +69,7 @@ export default function SignIn() {
             <Input id="password" type={show?"text":"password"} onChange={(e)=>setPassword(e.target.value)}/>
             
             <Button 
-                className="w-full bg-orange-500 hover:bg-orange-600 active:bg-orange-700 mt-6"
+                className="w-full bg-orange-500 cursor-pointer hover:bg-orange-600 active:bg-orange-700 mt-6"
                 onClick={(e) => {
                     e.preventDefault();
                     handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
