@@ -5,9 +5,10 @@ import { isAuthenticated } from "@/static/Auth"
 export function Navbar() {
   const location = useLocation()
 
-  const isHomeRoute = location.pathname.startsWith("/home")
   const isOnboardingRoute = location.pathname === "/"
+  const isHomeRoute = location.pathname === "/home"
   const isExercisesRoute = location.pathname === "/exercises"
+  const isSplitsRoute = location.pathname === "/splits"
 
   const navItems = isHomeRoute
     ? [
@@ -24,7 +25,11 @@ export function Navbar() {
         { label: "Profile", path: "/home" },
         { label: "Splits", path: "/splits" },
       ]
-    : [];
+    : isSplitsRoute
+    ? [
+        { label: "Profile", path: "/home" },
+        { label: "Exercises", path: "/exercises" },
+      ]: [];
   
 
   return (
