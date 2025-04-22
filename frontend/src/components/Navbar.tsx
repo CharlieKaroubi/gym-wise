@@ -1,19 +1,61 @@
-import { Link } from 'react-router-dom'
-import {Button} from '@/components/ui/button'
+import { Link, useLocation } from "react-router-dom"
+import { Button } from "@/components/ui/button"
+import { isAuthenticated } from "@/static/Auth"
 
 export function Navbar() {
-    return (
-      <header className="w-full p-4 shadow bg-white sticky top-0 z-50">
-        <div className="flex items-center justify-between px-4">
+  const location = useLocation()
+
+  const isHomeRoute = location.pathname.startsWith("/home")
+  const isOnboardingRoute = location.pathname === "/"
+  const isExercisesRoute = location.pathname === "/exercises"
+
+  const navItems = isHomeRoute
+    ? [
+        { label: "Exercises", path: "/exercises" },
+        { label: "Splits", path: "/splits" },
+      ]
+    : 
+    isOnboardingRoute
+    ? [
+        { label: "Sign In", path: "/signin" },
+      ]
+    : isExercisesRoute
+    ? [
+        { label: "Profile", path: "/home" },
+        { label: "Splits", path: "/splits" },
+      ]
+    : [];
+  
+
+  return (
+    <header className="w-full p-4 shadow bg-white sticky top-0 z-50">
+      <div className="flex items-center justify-between px-4">
+        {/* Logo */}
+        {isAuthenticated() ? (
+        <Link to="/home" className="text-2xl font-bold text-orange-500 font-lilita">
+          HypertroFi
+        </Link>
+        ) : (
           <h1 className="text-2xl font-bold text-orange-500 font-lilita">HypertroFi</h1>
-          <nav className="space-x-4">
-              <Link to="/signin" className="text-orange-500 hover:text-orange-600">
-                <Button className="bg-orange-500 hover:bg-orange-600 cursor-pointer active:bg-orange-700">
-                  Sign In
-                </Button>
-              </Link>
-          </nav>
-        </div>
-      </header>
-    )
-  }
+        )}
+
+        {/* Right Side Navigation */}
+        <nav className="flex items-center space-x-6">
+          {navItems.map(({ label, path }) => (
+            <Link
+              key={path}
+              to={path}
+              className={`font-medium ${
+                location.pathname === path
+                  ? "text-orange-600"
+                  : "text-orange-500 hover:text-orange-600"
+              }`}
+            >
+              {label}
+            </Link>
+          ))}
+        </nav>
+      </div>
+    </header>
+  )
+}

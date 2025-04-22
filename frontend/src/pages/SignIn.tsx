@@ -5,40 +5,44 @@ import { Button } from "@/components/ui/button"
 import { Eye, EyeOff } from "lucide-react"
 import { useState } from "react"
 import { Link } from 'react-router-dom'
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
+import axiosInstance from "@/api/axiosInstance"
 
-export default function SignUp() {
+
+export default function SignIn() {
+
+    type LoginResponse = {
+        token: string;
+        expiresIn: number;
+    };
+
     const[show, setShow] = useState(false)
     const[email, setEmail] = useState("")
     const[password, setPassword] = useState("")
     const[error, setError] = useState("")
     const navigate = useNavigate()
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        setError("")
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setError("");
+      
         try {
-            const res = await fetch("http://localhost:8080/auth/login", {
-                method: "POST",
-                headers: {
-                "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email, password }),
-        });
-
-        if(!res.ok){
-            throw new Error("Invalid email or password")
+          const res = await axiosInstance.post<LoginResponse>("/auth/login", {
+            email,
+            password,
+          });
+      
+          localStorage.setItem("token", res.data.token);
+      
+          const profileRes = await axiosInstance.get("/users/profile")
+          console.log(profileRes.data);
+          localStorage.setItem("user", JSON.stringify(profileRes.data));
+          navigate("/home");
+        } catch (err) {
+            const message = (err as any)?.response?.data?.message || "Login failed";
+            setError(message);
         }
-        const data = await res.json()
-
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user)); 
-        navigate("/home");   
-        } catch (error:any) {
-            setError(error.message || "Something went wrong")
-        }
-
-    }
+    };
 
 
     return (
@@ -66,7 +70,10 @@ export default function SignUp() {
             
             <Button 
                 className="w-full bg-orange-500 hover:bg-orange-600 active:bg-orange-700 mt-6"
-                onClick={handleSubmit}
+                onClick={(e) => {
+                    e.preventDefault();
+                    handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+                }}
             >
                 Sign In
             </Button>
@@ -79,3 +86,4 @@ export default function SignUp() {
         </AuthLayout>
     )
 }
+
